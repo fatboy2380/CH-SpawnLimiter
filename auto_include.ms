@@ -1,38 +1,30 @@
 proc(_sn_check, @loc, @type,
 
-     @earray = entities_in_radius(@loc, 20, @type)
+   @earray = entities_in_radius(@loc, 20, @type)
  	 if(array_size(@earray) > 15)
  	  {
    	   cancel()
-   	   foreach(@earray, @en,
-           if(array_size(entities_in_radius(@loc, 20, @type)) > 15)
-            {
-             try(entity_remove(@en))
-            }    
-         )
-       }
-
-     @earray = entities_in_radius(@loc, 50, @type)
- 	 if(array_size(@earray) > 25)
- 	  {
-   	   cancel()
-   	   foreach(@earray, @en,
-           if(array_size(entities_in_radius(@loc, 50, @type)) > 25)
-            {
-             try(entity_remove(@en))
-            }    
-         )
-       }
-
-     @earray = entities_in_radius(@loc, 128, @type)
- 	 if(array_size(@earray) > 100)
- 	  {
-   	   cancel()
-   	   foreach(@earray, @en,
-           if(array_size(entities_in_radius(@loc, 128, @type)) > 120)
-            {
-             try(entity_remove(@en))
-            }    
-         )
-       }
+       if(array_size(@earray) > 16)
+   	    {try(entity_remove(@earray[0]))
+          set_timeout(50, closure(_sn_check(@loc, @type)))
+        }
+    }
+   @earray = entities_in_radius(@loc, 50, @type)
+   if(array_size(@earray) > 40)
+    {
+       cancel()
+       if(array_size(@earray) > 41)
+        {try(entity_remove(@earray[0]))
+          set_timeout(50, closure(_sn_check(@loc, @type)))
+        }
+    }
+   @earray = entities_in_radius(@loc, 100, @type)
+   if(array_size(@earray) > 80)
+    {
+       cancel()
+       if(array_size(@earray) > 81)
+        {try(entity_remove(@earray[0]))
+          set_timeout(50, closure(_sn_check(@loc, @type)))
+        }
+    }
 )
